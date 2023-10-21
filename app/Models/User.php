@@ -9,9 +9,28 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class   User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
+
+    const ROLE_ADMIN = 0;
+    const ROLE_USER = 1;
+
+
+public static function getRoles()
+{
+    return [
+        self::ROLE_ADMIN => 'Админ',
+        self::ROLE_USER => 'Пользователь',
+    ];
+}
+
+
+
+
+
+
 
     /**
      * The attributes that are mass assignable.
@@ -22,6 +41,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'contacts',
+        'avatar',
     ];
 
     /**
