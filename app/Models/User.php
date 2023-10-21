@@ -14,6 +14,8 @@ class   User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
 
+    protected $guarded = false;
+
     const ROLE_ADMIN = 0;
     const ROLE_USER = 1;
 

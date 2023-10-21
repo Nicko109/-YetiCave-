@@ -70,9 +70,9 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-    {{--                                <div>--}}
-    {{--                                    {{ $categories->withQueryString()->links() }}--}}
-    {{--                                </div>--}}
+                                    <div class="mx-auto">
+                                        {{ $categories->withQueryString()->links() }}
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>

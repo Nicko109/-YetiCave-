@@ -29,7 +29,7 @@ class CategoryController extends Controller
     }
 
 
-    public function form(Request $request, $categoryId = '')
+    public function form($categoryId = '')
     {
         $category = null;
         if (!empty($categoryId)) {
@@ -61,8 +61,6 @@ class CategoryController extends Controller
             'title' => 'required|string',
             'character_code' => 'required|string',
         ];
-
-
         return $rules;
     }
 

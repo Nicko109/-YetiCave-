@@ -51,7 +51,7 @@
                             <div class="icon">
                                 <i class="far fa-clipboard"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('admin.lot.index') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
