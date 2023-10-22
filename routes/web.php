@@ -13,8 +13,6 @@
     |
     */
 
-
-
     Auth::routes();
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -28,6 +26,7 @@
     Route::group([
         'prefix' => 'admin',
         'as' => 'admin.',
+        'middleware' => ['auth', 'admin'],
     ],function(){
             Route::get('/', [App\Http\Controllers\Admin\MainController::class, 'index'])->name('main.index');
 
