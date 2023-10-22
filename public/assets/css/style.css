@@ -289,6 +289,7 @@ main.container {
 .main-footer {
   background-color: #ffffff;
   box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 150px;
 }
 
 .main-footer__bottom {
@@ -1236,4 +1237,13 @@ input:invalid .form__error{
 
 .rates__item--end {
   opacity: 0.4;
+}
+
+.logout-button {
+    background: none; /* Убрать фон */
+    border: none; /* Убрать границу */
+    color: inherit; /* Использовать цвет текста по умолчанию */
+    cursor: pointer; /* Изменить курсор при наведении */
+    padding: 0; /* Убрать внутренний отступ */
+    font: inherit; /* Использовать шрифт по умолчанию (если установлен) */
 }

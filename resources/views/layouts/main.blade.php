@@ -22,12 +22,28 @@
                 <input class="main-header__search-btn" type="submit" name="find" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="add-lot.html">Добавить лот</a>
-            <nav class="user-menu">
-                <div class="user-menu__logged">
-                    <p>Константин</p>
-                    <a href="login.html">Выйти</a>
-                </div>
-            </nav>
+            @if(auth()->check())
+                <nav class="user-menu">
+                    <div class="user-menu__logged">
+                        <p>Константин</p>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="logout-button">Выйти</button>
+                        </form>
+                    </div>
+                </nav>
+            @else
+                <nav class="user-menu">
+                    <ul class="user-menu__list">
+                        <li class="user-menu__item">
+                            <a href="{{ route('register') }}">Регистрация</a>
+                        </li>
+                        <li class="user-menu__item">
+                            <a href="{{ route('login') }}">Вход</a>
+                        </li>
+                    </ul>
+                </nav>
+                @endif
         </div>
     </header>
 

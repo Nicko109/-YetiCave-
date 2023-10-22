@@ -17,11 +17,30 @@
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-    Route::get('/guest', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
+    Route::get('/', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
 
-    Route::get('/', [App\Http\Controllers\Main\IndexController::class, 'index'])->name('main.index');
+    Route::group([
+        'prefix' => 'main',
+        'as' => 'main.',
+        'middleware' => ['auth'],
+    ],function(){
+    Route::get('/', [App\Http\Controllers\Main\IndexController::class, 'index'])->name('index');
+    });
 
-    //Route::group(['middleware' => ['auth', 'admin']], function () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     Route::group([
         'prefix' => 'admin',
