@@ -25,6 +25,19 @@
         'middleware' => ['auth'],
     ],function(){
     Route::get('/', [App\Http\Controllers\Main\IndexController::class, 'index'])->name('index');
+
+
+        Route::group([
+            'prefix' => 'lots',
+            'as' => 'lot.',
+        ],function(){
+            Route::get('/view/{id}', [App\Http\Controllers\Main\LotController::class, 'view'])->name('view');
+            Route::get('/form/{id?}', [App\Http\Controllers\Main\LotController::class, 'form'])->name('form');
+            Route::post('/', [App\Http\Controllers\Main\LotController::class, 'actions'])->name('actions');
+        });
+
+
+
     });
 
 
