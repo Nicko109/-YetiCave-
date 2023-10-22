@@ -43,7 +43,7 @@ class LotController extends Controller
 
         if($request['action'] == 'create' || $request['action'] == 'update') {
             $data = $request->validate($this->rules());
-            $data['image'] = Storage::put('/images', $data['image']);
+            $data['image'] = Storage::disk('public')->put('/images', $data['image']);
             $data['user_id'] = auth()->user()->id;
             $lot->fill($data);
             $lot->save();
