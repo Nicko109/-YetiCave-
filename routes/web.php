@@ -61,4 +61,15 @@
             Route::post('/', [App\Http\Controllers\Admin\LotController::class, 'actions'])->name('actions');
         });
 
+        Route::group([
+            'prefix' => 'bets',
+            'as' => 'bet.'
+        ], function () {
+            Route::get('/', [\App\Http\Controllers\Admin\BetController::class, 'index'])->name('index');
+            Route::get('/view/{id}', [\App\Http\Controllers\Admin\BetController::class, 'view'])->name('view');
+            Route::get('/form/{id?}', [\App\Http\Controllers\Admin\BetController::class, 'form'])->name('form');
+            Route::post('/', [\App\Http\Controllers\Admin\BetController::class, 'actions'])->name('actions');
+        });
+
+
     });

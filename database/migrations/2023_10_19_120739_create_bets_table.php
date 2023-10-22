@@ -17,8 +17,8 @@ return new class extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('lot_id');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('lot_id')->nullable();
 
             $table->index('user_id', 'bets_user_idx');
             $table->index('lot_id', 'bets_lot_idx');

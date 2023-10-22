@@ -44,7 +44,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>#</h3>
+                                <h3>{{ $data['lotsCount'] }}</h3>
                                 <p>Лоты</p>
 {{--                                <p>Создано: {{ $data['tasksCreatedInPeriod'] }} задачи</p>--}}
                             </div>
@@ -75,14 +75,14 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>#</h3>
+                                <h3>{{ $data['betsCount'] }}</h3>
 
                                 <p>Ставки</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-tags"></i>
                             </div>
-                            <a href="#" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('admin.bet.index') }}" class="small-box-footer">Подробнее <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
