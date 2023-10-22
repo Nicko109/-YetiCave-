@@ -18,9 +18,10 @@ class LotController extends Controller
 
     public function view($lotId)
     {
+        $categories = Category::all();
         $user = Auth::user();
         $lot = Lot::find($lotId);
-        return view('main.lot.view', compact('lot', 'user'));
+        return view('main.lot.view', compact('lot', 'user', 'categories'));
     }
 
     public function form($lotId = '')
