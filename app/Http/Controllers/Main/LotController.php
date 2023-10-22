@@ -25,7 +25,7 @@ class LotController extends Controller
 
     public function form($lotId = '')
     {
-
+        $user = Auth::user();
         $categories = Category::all();
         $lot = null;
 
@@ -33,7 +33,7 @@ class LotController extends Controller
             $lot = Lot::query()->where('id', $lotId)->first();
         }
 
-        return view('main.lot.form', compact( 'categories','lot'));
+        return view('main.lot.form', compact( 'categories','lot', 'user'));
     }
 
     public function actions(Request $request)
@@ -51,7 +51,7 @@ class LotController extends Controller
             $lot->delete();
         }
 
-        return redirect()->route('main.lot.index', compact( 'lot'));
+        return redirect()->route('main.index', compact( 'lot'));
     }
 
     private function rules()

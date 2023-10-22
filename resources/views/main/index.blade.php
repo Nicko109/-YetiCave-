@@ -38,6 +38,9 @@
             </li>
             @endforeach
         </ul>
+        <div>
+            {{ $lots->withQueryString()->links() }}
+        </div>
     </section>
 </main>
 @endsection

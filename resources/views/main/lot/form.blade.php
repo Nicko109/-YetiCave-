@@ -1,130 +1,94 @@
-@extends('layouts.admin')
+@extends('layouts.main')
 @section('content')
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        @if(is_null($lot))
-                            <h1 class="m-0">Добавление лота</h1>
-                        @else
-                            <h1 class="m-0">Редактирование лота</h1>
-                        @endif
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('admin.main.index') }}">Главная</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('admin.lot.index') }}">Лоты</a></li>
-                            @if(is_null($lot))
-                                <li class="breadcrumb-item active">Добавление лота</li>
-                            @else
-                                <li class="breadcrumb-item active">Редактирование лота</li>
-                            @endif
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
 
-        <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- Small boxes (Stat box) -->
-                <div class="row">
-                    <form class="w-50" action="{{ route('admin.lot.actions') }}" method="POST"
-                          enctype="multipart/form-data">
-                        @csrf
-                        @if (is_null($lot))
-                            <input type="hidden" name="action" value="create">
-                        @else
-                            <input type="hidden" name="action" value="update">
-                            <input type="hidden" name="id" value="{{ $lot->id }}">
-                        @endif
-                        <div class="form-group w-50">
-                            <label for="name">Наименование</label>
-                            <input type="text" class="form-control" placeholder="Название лота" name="title"
-                                   value="{{ is_null($lot) ? '' : $lot->title }}">
-                            @error('title')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group w-50">
-                            <label>Категория</label>
-                            <select name="category_id" class="form-control">
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                    @if(is_null($lot))
-                                        {{ $category->id == old('category_id') ? 'selected' : ''}}
-                                        @else
-                                        {{ $category->id == $lot->category_id ? 'selected' : ''}}
-                                        @endif
-                                    >{{ $category->title }}</option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="contacts">Описание</label>
-                            <textarea class="form-control" name="lot_description" id="lot_description"
-                                      placeholder="Напишите описание лота">{{ is_null($lot) ? '' : $lot->lot_description }}</textarea>
-                            @error('lot_description')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Изображение</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input"
-                                           name="image" {{ is_null($lot) ? '' : $lot->image }}>
-                                    <label class="custom-file-label">Добавить</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Загрузка</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="name">Начальная цена</label>
-                            <input type="number" class="form-control" placeholder="0" name="start_price"
-                                   value="{{ is_null($lot) ? '' : $lot->start_price }}">
-                            @error('start_price')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="name">Шаг ставки</label>
-                            <input type="number" class="form-control" placeholder="0" name="step"
-                                   value="{{ is_null($lot) ? '' : $lot->step }}">
-                            @error('step')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group w-50">
-                            <label for="name">Дата окончания торгов</label>
-                            <div class="input-group">
-                            <input type="date" class="form-control"  name="date_finish"
-                                   value="{{ is_null($lot) ? '' : $lot->date_finish }}">
-                            </div>
-                            @error('date_finish')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <input type="submit" class="btn btn-primary"
-                               value="{{ is_null($lot) ? 'Добавить лот' : 'Изменить' }}">
-                    </form>
+    <main>
+        <form class="form form--add-lot container form--invalid" action="{{ route('main.lot.actions') }}" method="POST"
+              enctype="multipart/form-data"> <!-- form--invalid -->
+            @csrf
+            <input type="hidden" name="action" value="create">
+            <h2>Добавление лота</h2>
+            <div class="form__container-two">
+                <div class="form__item @error('title') form__item--invalid @enderror">
+                    <label for="title">Наименование <sup>*</sup></label>
+                    <input id="title" type="text" name="title" placeholder="Введите наименование лота">
+                    @error('title')
+                    <span class="form__error" role="alert">
+                                        <strong>Введите наименование лота</strong>
+                                    </span>
+                    @enderror
                 </div>
-                <!-- /.row -->
+                <div class="form__item">
+                    <label for="category_id">Категория <sup>*</sup></label>
+                    <select id="category_id" name="category_id">
+                        @foreach($categories as $category)
+                        <option value="{{ $category->id }}"
+                            {{ $category->id == old('category_id') ? 'selected' : ''}}>{{ $category->title }}</option>
 
-            </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
+                        @endforeach
+                    </select>
+                    @error('category_id')
+                    <span class="form__error" role="alert">
+                                        <strong>Выберите категорию</strong>
+                                    </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="form__item form__item--wide">
+                <label for="lot_description">Описание <sup>*</sup></label>
+                <textarea id="lot_description" name="lot_description" placeholder="Напишите описание лота"></textarea>
+                @error('lot_description')
+                <span class="form__error" role="alert">
+                                        <strong>Напишите описание лота</strong>
+                                    </span>
+                @enderror
+            </div>
+            <div class="form__item form__item--file">
+                <label>Изображение <sup>*</sup></label>
+                <div class="form__input-file">
+                    <input class="visually-hidden" type="file" id="image" value="" name="image">
+                    <label for="image">
+                        Добавить
+                    </label>
+                </div>
+            </div>
+            <div class="form__container-three">
+                <div class="form__item form__item--small">
+                    <label for="start_price">Начальная цена <sup>*</sup></label>
+                    <input id="start_price" type="text" name="start_price" placeholder="0">
+                    @error('start_price')
+                    <span class="form__error" role="alert">
+                                        <strong>Введите начальную цену</strong>
+                                    </span>
+                    @enderror
+                </div>
+                <div class="form__item form__item--small">
+                    <label for="step">Шаг ставки <sup>*</sup></label>
+                    <input id="step" type="text" name="step" placeholder="0">
+                    @error('start_price')
+                    <span class="form__error" role="alert">
+                                        <strong>Введите шаг ставки</strong>
+                                    </span>
+                    @enderror
+                </div>
+                <div class="form__item">
+                    <label for="date_finish">Дата окончания торгов <sup>*</sup></label>
+                    <input class="form__input-date" id="date_finish" type="datetime-local" name="date_finish"
+                           placeholder="">
+                    @error('start_price')
+                    <span class="form__error" role="alert">
+                                        <strong>Введите дату завершения торгов</strong>
+                                    </span>
+                    @enderror
+                </div>
+            </div>
+            <div class="form__row form__row--controls">
+                @if($errors->any())
+                    <p class="form__error form__error--bottom" style="color: red">Пожалуйста, исправьте ошибки в форме</p>
+                @endif
+            </div>
+            <button type="submit" class="button">Добавить лот</button>
+
+        </form>
+    </main>
+
 @endsection
