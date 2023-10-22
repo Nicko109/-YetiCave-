@@ -15,20 +15,23 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('lot_description');
-            $table->string('image');
+            $table->string('image')->nullable();
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedSmallInteger('status')->default(0);
             $table->unsignedBigInteger('start_price');
             $table->dateTime('date_finish');
             $table->unsignedBigInteger('step');
-            $table->unsignedSmallInteger('status')->default(0);
+
             $table->softDeletes();
+
             $table->timestamps();
 
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->index('category_id', 'task_category_idx');
-            $table->foreign('category_id', 'task_category_fk')->on('categories')->references('id');
+
+            $table->index('category_id', 'lot_category_idx');
+            $table->foreign('category_id', 'lot_category_fk')->on('categories')->references('id');
         });
     }
 

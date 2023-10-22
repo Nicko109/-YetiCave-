@@ -16,6 +16,7 @@ class Category extends Model
 
     protected $guarded = false;
 
+
     public function lots()
     {
         return $this->hasMany(Lot::class, 'category_id', 'id');

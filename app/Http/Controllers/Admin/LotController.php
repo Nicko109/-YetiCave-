@@ -68,6 +68,7 @@ class LotController extends Controller
             'start_price' => 'required|integer',
             'date_finish' => 'required|date|after_or_equal:today',
             'step' => 'required|integer',
+            'category_id' => 'required|integer|exists:categories,id',
         ];
 
         return $rules;

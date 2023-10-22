@@ -16,10 +16,14 @@ class Lot extends Model
 
     protected $guarded = false;
 
-    public function category(){
 
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+
+
 
     public function user()
     {

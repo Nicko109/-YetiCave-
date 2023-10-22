@@ -25,7 +25,7 @@
             @if(auth()->check())
                 <nav class="user-menu">
                     <div class="user-menu__logged">
-                        <p>Константин</p>
+                        <p>{{$user->name}}</p>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="logout-button">Выйти</button>
