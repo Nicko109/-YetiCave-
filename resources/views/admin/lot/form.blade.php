@@ -108,7 +108,7 @@
                         <div class="form-group w-50">
                             <label for="name">Дата окончания торгов</label>
                             <div class="input-group">
-                            <input type="date" class="form-control"  name="date_finish"
+                            <input type="datetime-local" class="form-control"  name="date_finish"
                                    value="{{ is_null($lot) ? '' : $lot->date_finish }}">
                             </div>
                             @error('date_finish')

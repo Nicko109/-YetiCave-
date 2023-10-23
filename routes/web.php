@@ -19,6 +19,8 @@
 
     Route::get('/', [App\Http\Controllers\GuestController::class, 'index'])->name('guest');
 
+
+
     Route::group([
         'prefix' => 'main',
         'as' => 'main.',

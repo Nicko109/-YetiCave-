@@ -7,7 +7,7 @@
         <ul class="promo__list">
             @foreach($categories as $category)
                 <li class="promo__item promo__item--{{$category->character_code}}">
-                    <a class="promo__link" href="all-lots.html">{{$category->title}}</a>
+                    <a class="promo__link" href="{{ route('main.index', ['category' => $category->id]) }}">{{$category->title}}</a>
                 </li>
             @endforeach
         </ul>
@@ -30,8 +30,18 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost">{{$lot->start_price}}<b class="rub">р</b></span>
                         </div>
-                        <div class="lot__timer timer">
-                            {{$lot->date_finish}}
+
+                            @php
+                                $now = \Carbon\Carbon::now();
+                                $endTime = \Carbon\Carbon::parse($lot->date_finish);
+                                $diff = $endTime->diff($now);
+                            @endphp
+                        <div class="lot__timer timer @if ($diff->d < 1) lot__timer timer timer--finishing @endif">
+                            @if ($diff->d > 0)
+                                {{ $diff->d }} д {{ $diff->h }} ч {{ $diff->i }} мин
+                            @else
+                                {{ $diff->h }} ч {{ $diff->i }} мин
+                            @endif
                         </div>
                     </div>
                 </div>

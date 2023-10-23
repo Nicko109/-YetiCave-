@@ -19,9 +19,9 @@
             <a class="main-header__logo" href="/">
                 <img src="{{asset('assets/img/logo.svg')}}" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
-            <form class="main-header__search" method="get" action="https://echo.htmlacademy.ru" autocomplete="off">
-                <input type="search" name="search" placeholder="Поиск лота">
-                <input class="main-header__search-btn" type="submit" name="find" value="Найти">
+            <form class="main-header__search" method="get" action="{{ route('main.index') }}" autocomplete="off">
+                <input type="search" name="title" placeholder="Поиск лота"  value="{{ request()->get('title') }}">
+                <input class="main-header__search-btn" type="submit" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="{{ route('main.lot.form') }}">Добавить лот</a>
             @if(auth()->check())
