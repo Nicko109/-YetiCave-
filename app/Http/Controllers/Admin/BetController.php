@@ -69,6 +69,7 @@ class BetController extends Controller
     {
         $rules = [
             'price_bet' => 'required|integer|min:1',
+            'lot_id' => 'required|integer|exists:lots,id',
         ];
         return $rules;
     }

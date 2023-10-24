@@ -45,13 +45,13 @@
                                 <input type="hidden" name="id" value="{{ $bet->id }}">
                             @endif
                             <div class="form-group">
-                                <label for="title">Сумма ставки</label>
+                                <label for="price_bet">Сумма ставки</label>
                                 <input type="text" class="form-control" placeholder="Введите сумму ставки" name="price_bet" value="{{ is_null($bet) ? '' : $bet->title }}">
                                 @error('price_bet')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                            <div class="form-group w-50">
+                            <div class="form-group w-100">
                                 <label>Лот</label>
                                 <select name="lot_id" class="form-control">
                                     @foreach($lots as $lot)

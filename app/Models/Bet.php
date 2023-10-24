@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,5 +25,10 @@ class Bet extends Model
     public function lot()
     {
         return $this->belongsTo(Lot::class, 'lot_id', 'id');
+    }
+
+    public function getDateAsCarbonAttribute()
+    {
+        return Carbon::parse($this->created_at);
     }
 }

@@ -14,6 +14,16 @@ class GuestController extends Controller
     {
         $categories = Category::all();
         $lotQuery = Lot::query();
+
+        if (isset($data['title'])) {
+            $lotQuery->where('title', 'like', "%{$data['title']}%");
+        }
+
+        if($request->has('category')){
+            $categoryId = $request->input('category');
+            $lotQuery->where('category_id', $categoryId);
+        }
+
         $lots = $lotQuery->paginate(6);
         if ($request->user() !== null) {
             return redirect()->route('main.index');

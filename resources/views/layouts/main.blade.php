@@ -19,12 +19,12 @@
             <a class="main-header__logo" href="/">
                 <img src="{{asset('assets/img/logo.svg')}}" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
-            <form class="main-header__search" method="get" action="{{ route('main.index') }}" autocomplete="off">
+            <form class="main-header__search" method="get"  action="{{ route('main.index') }}"  autocomplete="off">
                 <input type="search" name="title" placeholder="Поиск лота"  value="{{ request()->get('title') }}">
                 <input class="main-header__search-btn" type="submit" value="Найти">
             </form>
             <a class="main-header__add-lot button" href="{{ route('main.lot.form') }}">Добавить лот</a>
-            @if(auth()->check())
+            @auth()
                 <nav class="user-menu">
                     <div class="user-menu__logged">
                         <p>{{$user->name}}</p>
@@ -34,7 +34,8 @@
                         </form>
                     </div>
                 </nav>
-            @else
+            @endauth
+            @guest()
                 <nav class="user-menu">
                     <ul class="user-menu__list">
                         <li class="user-menu__item">
@@ -45,7 +46,7 @@
                         </li>
                     </ul>
                 </nav>
-                @endif
+                @endguest
         </div>
     </header>
 
@@ -55,6 +56,7 @@
 
 <footer class="main-footer">
     <nav class="nav">
+        @auth()
         <ul class="nav__list container">
             <li class="nav__item">
                 <a href="{{ route('main.index', ['category' => 1]) }}">Доски и лыжи</a>
@@ -75,6 +77,29 @@
                 <a href="{{ route('main.index', ['category' => 6]) }}">Разное</a>
             </li>
         </ul>
+        @endauth
+            @guest()
+                <ul class="nav__list container">
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 1]) }}">Доски и лыжи</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 2]) }}">Крепления</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 3]) }}">Ботинки</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 4]) }}">Одежда</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 5]) }}">Инструменты</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ route('guest', ['category' => 6]) }}">Разное</a>
+                    </li>
+                </ul>
+            @endguest
     </nav>
     <div class="main-footer__bottom container">
         <div class="main-footer__copyright">

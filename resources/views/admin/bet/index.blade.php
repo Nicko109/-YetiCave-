@@ -30,7 +30,7 @@
     {{--                    <input class="btn-primary mb-4" type="submit" value="Поиск">--}}
     {{--                </form>--}}
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-10">
                             <div class="card">
 
                                 <!-- /.card-header -->
@@ -44,6 +44,7 @@
                                                 <a href="{{ route('admin.bet.index', ['sort' => 'asc'])}}">↑</a>
                                                 <a href="{{ route('admin.bet.index', ['sort' => 'desc'])}}">↓</a>
                                             </th>
+                                            <th>Наименование лота</th>
                                             <th colspan="3" class="text-center">Действие</th>
                                         </tr>
                                         </thead>
@@ -52,6 +53,7 @@
                                             <tr>
                                                 <td>{{ $bet->id }}</td>
                                                 <td>{{ $bet->price_bet }}</td>
+                                                <td>{{ $bet->lot->title }}</td>
                                                 <td class="text-center"> <a href="{{ route('admin.bet.view', $bet->id) }}"><i class="far fa-eye"></i></a></td>
                                                 <td class="text-center"> <a href="{{ route('admin.bet.form', $bet->id) }}" class="text-success"><i class="fas fa-edit"></i></a></td>
                                                 <td class="text-center">

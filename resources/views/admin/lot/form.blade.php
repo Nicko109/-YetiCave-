@@ -58,9 +58,9 @@
                                     <option value="{{ $category->id }}"
                                     @if(is_null($lot))
                                         {{ $category->id == old('category_id') ? 'selected' : ''}}
-                                        @else
+                                            @else
                                         {{ $category->id == $lot->category_id ? 'selected' : ''}}
-                                        @endif
+                                            @endif
                                     >{{ $category->title }}</option>
                                 @endforeach
                             </select>
@@ -108,8 +108,8 @@
                         <div class="form-group w-50">
                             <label for="name">Дата окончания торгов</label>
                             <div class="input-group">
-                            <input type="datetime-local" class="form-control"  name="date_finish"
-                                   value="{{ is_null($lot) ? '' : $lot->date_finish }}">
+                                <input type="datetime-local" class="form-control" name="date_finish"
+                                       value="{{ is_null($lot) ? '' : $lot->date_finish }}">
                             </div>
                             @error('date_finish')
                             <div class="text-danger">{{ $message }}</div>

@@ -13,44 +13,53 @@
                 </div>
                 <div class="lot-item__right">
                     <div class="lot-item__state">
+                        @php
+                            $now = \Carbon\Carbon::now();
+                            $endTime = \Carbon\Carbon::parse($lot->date_finish);
+                            $diff = $endTime->diff($now);
+                        @endphp
+                        <div class="lot__timer timer @if ($diff->d < 1) lot__timer timer timer--finishing @endif">
+                            @if ($diff->d > 0)
+                                {{ $diff->d }} д {{ $diff->h }} ч {{ $diff->i }} мин
+                            @else
+                                {{ $diff->h }} ч {{ $diff->i }} мин
+                            @endif
+                        </div>
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
-                                @php
-                                    $now = \Carbon\Carbon::now();
-                                    $endTime = \Carbon\Carbon::parse($lot->date_finish);
-                                    $diff = $endTime->diff($now);
-                                @endphp
-                                <div class="lot__timer timer @if ($diff->d < 1) lot__timer timer timer--finishing @endif">
-                                    @if ($diff->d > 0)
-                                        {{ $diff->d }} д {{ $diff->h }} ч {{ $diff->i }} мин
-                                    @else
-                                        {{ $diff->h }} ч {{ $diff->i }} мин
-                                    @endif
-                                </div>
                                 <span class="lot-item__amount">Текущая цена</span>
                                 <span class="lot-item__cost">{{$lot->start_price}}</span>
                             </div>
                             <div class="lot-item__min-cost">
-                                Мин. ставка <span>{{$lot->start_price + 1}} р</span>
+                                Мин. ставка <span>{{$lot->start_price + $lot->step}} р</span>
                             </div>
                         </div>
-                        <form class="lot-item__form" action="https://echo.htmlacademy.ru" method="post" autocomplete="off">
-                            <p class="lot-item__form-item form__item @error('email') form__item--invalid @enderror">
-                                <label for="cost">Ваша ставка</label>
-                                <input id="cost" type="text" name="cost" placeholder="{{$lot->start_price + 1}}">
-                                <span class="@error('email') form__error @enderror">Введите наименование лота</span>
+                        <form class="lot-item__form" action="{{route('main.lot.bet.actions', $lot->id)}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="action" value="create">
+                            <p class="form__item @error('email') form__item--invalid @enderror">
+                                <label for="price_bet">Ваша ставка</label>
+                                <input id="price_bet" type="text" name="price_bet" placeholder="{{$lot->start_price + $lot->step}}" class="form__input @error('price_bet') form__error @enderror">
                             </p>
                             <button type="submit" class="button">Сделать ставку</button>
                         </form>
+                        @if($errors->any())
+                            <p class="error-message" style="color: red">Введите ставку</p>
+                            @enderror
                     </div>
                     <div class="history">
-                        <h3>История ставок (<span>0</span>)</h3>
+                        <h3>История ставок ({{ $lot->bets->count()  }})</h3>
                         <table class="history__list">
+                            @foreach($lot->bets as $bet)
+                            <tr class="history__item">
+                                <td class="history__name">{{ $bet->user->name }}</td>
+                                <td class="history__price">{{ $bet->price_bet }}</td>
+                                <td class="history__time">{{ $bet->dateAsCarbon->diffForHumans() }}</td>
+                            </tr>
+                                @endforeach
                         </table>
                     </div>
                 </div>
-            </div>
         </section>
     </main>
-
 @endsection

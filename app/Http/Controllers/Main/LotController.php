@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Main;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\StoreRequest;
+use App\Models\Bet;
 use App\Models\Category;
 use App\Models\Lot;
 use App\Models\User;
@@ -21,7 +22,8 @@ class LotController extends Controller
         $categories = Category::all();
         $user = Auth::user();
         $lot = Lot::find($lotId);
-        return view('main.lot.view', compact('lot', 'user', 'categories'));
+        $bets = Bet::all();
+        return view('main.lot.view', compact('lot', 'user', 'categories', 'bets'));
     }
 
     public function form($lotId = '')
