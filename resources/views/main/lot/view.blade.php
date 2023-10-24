@@ -13,11 +13,20 @@
                 </div>
                 <div class="lot-item__right">
                     <div class="lot-item__state">
-                        <div class="lot-item__timer timer">
-                            {{$lot->date_finish}}
-                        </div>
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
+                                @php
+                                    $now = \Carbon\Carbon::now();
+                                    $endTime = \Carbon\Carbon::parse($lot->date_finish);
+                                    $diff = $endTime->diff($now);
+                                @endphp
+                                <div class="lot__timer timer @if ($diff->d < 1) lot__timer timer timer--finishing @endif">
+                                    @if ($diff->d > 0)
+                                        {{ $diff->d }} д {{ $diff->h }} ч {{ $diff->i }} мин
+                                    @else
+                                        {{ $diff->h }} ч {{ $diff->i }} мин
+                                    @endif
+                                </div>
                                 <span class="lot-item__amount">Текущая цена</span>
                                 <span class="lot-item__cost">{{$lot->start_price}}</span>
                             </div>

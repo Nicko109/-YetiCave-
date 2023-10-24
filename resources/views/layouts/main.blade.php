@@ -57,22 +57,22 @@
     <nav class="nav">
         <ul class="nav__list container">
             <li class="nav__item">
-                <a href="all-lots.html">Доски и лыжи</a>
+                <a href="{{ route('main.index', ['category' => 1]) }}">Доски и лыжи</a>
             </li>
             <li class="nav__item">
-                <a href="all-lots.html">Крепления</a>
+                <a href="{{ route('main.index', ['category' => 2]) }}">Крепления</a>
             </li>
             <li class="nav__item">
-                <a href="all-lots.html">Ботинки</a>
+                <a href="{{ route('main.index', ['category' => 3]) }}">Ботинки</a>
             </li>
             <li class="nav__item">
-                <a href="all-lots.html">Одежда</a>
+                <a href="{{ route('main.index', ['category' => 4]) }}">Одежда</a>
             </li>
             <li class="nav__item">
-                <a href="all-lots.html">Инструменты</a>
+                <a href="{{ route('main.index', ['category' => 5]) }}">Инструменты</a>
             </li>
             <li class="nav__item">
-                <a href="all-lots.html">Разное</a>
+                <a href="{{ route('main.index', ['category' => 6]) }}">Разное</a>
             </li>
         </ul>
     </nav>
