@@ -27,7 +27,7 @@ class IndexController extends Controller
             $lotQuery->where('category_id', $categoryId);
         }
 
-        $lots = $lotQuery->paginate(6);
+        $lots = $lotQuery->orderBy('created_at', 'desc')->paginate(6);
 
         return view('main.index', compact('categories', 'user', 'lots'));
     }

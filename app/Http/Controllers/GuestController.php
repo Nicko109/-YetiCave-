@@ -12,6 +12,8 @@ class GuestController extends Controller
 
     public function index(Request $request)
     {
+        $data = $request->validate($this->rules());
+        $user = Auth::user();
         $categories = Category::all();
         $lotQuery = Lot::query();
 
@@ -24,10 +26,22 @@ class GuestController extends Controller
             $lotQuery->where('category_id', $categoryId);
         }
 
-        $lots = $lotQuery->paginate(6);
+        $lots = $lotQuery->orderBy('created_at', 'desc')->paginate(6);
+
         if ($request->user() !== null) {
             return redirect()->route('main.index');
         }
-        return view('main.guest', compact('categories', 'lots'));
+
+        return view('main.guest', compact('categories', 'user', 'lots'));
+    }
+
+    private function rules()
+    {
+        $rules = [
+            'title' => 'nullable|string',
+            'category_id' => 'exists,id',
+        ];
+
+        return $rules;
     }
 }

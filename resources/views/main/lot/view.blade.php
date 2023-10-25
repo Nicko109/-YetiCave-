@@ -28,29 +28,50 @@
                         <div class="lot-item__cost-state">
                             <div class="lot-item__rate">
                                 <span class="lot-item__amount">Текущая цена</span>
-                                <span class="lot-item__cost">{{$lot->start_price}}</span>
+                                <span class="lot-item__cost">
+                                    @if($lastBet)
+                                    {{$lastBet->price_bet}}
+                                    @else
+                                        {{$lot->start_price}}
+                                    @endif
+                                </span>
                             </div>
                             <div class="lot-item__min-cost">
-                                Мин. ставка <span>{{$lot->start_price + $lot->step}} р</span>
+                                Мин. ставка <span>
+                                    @if($lastBet)
+                                        {{$lastBet->price_bet + $lot->step}} р
+                                        @else
+                                            {{$lot->start_price + $lot->step}} р
+                                        @endif
+                                </span>
                             </div>
                         </div>
-                        <form class="lot-item__form" action="{{route('main.lot.bet.actions', $lot->id)}}" method="POST">
-                            @csrf
-                            <input type="hidden" name="action" value="create">
-                            <p class="form__item @error('email') form__item--invalid @enderror">
-                                <label for="price_bet">Ваша ставка</label>
-                                <input id="price_bet" type="text" name="price_bet" placeholder="{{$lot->start_price + $lot->step}}" class="form__input @error('price_bet') form__error @enderror">
-                            </p>
-                            <button type="submit" class="button">Сделать ставку</button>
-                        </form>
+                        @if (!$isOwner)
+                            @if ($lastBet && $lastBet->user_id == $user->id)
+                                <p>Вы сделали последнюю ставку и не можете делать ещё.</p>
+                            @else
+                                <form class="lot-item__form" action="{{route('main.lot.bet.actions', $lot->id)}}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="action" value="create">
+                                    <p class="form__item @error('email') form__item--invalid @enderror">
+                                        <label for="price_bet">Ваша ставка</label>
+                                        <input id="price_bet" type="text" name="price_bet" placeholder="{{$lastBet ? $lastBet->price_bet + $lot->step : ($lot->start_price + $lot->step)}}" class="form__input @error('price_bet') form__error @enderror">
+                                    </p>
+                                    <button type="submit" class="button">Сделать ставку</button>
+                                </form>
+                            @endif
+                        @elseif ($isOwner)
+                            <p>Вы являетесь владельцем этого лота, поэтому не можете делать ставки.</p>
+                        @endif
                         @if($errors->any())
-                            <p class="error-message" style="color: red">Введите ставку</p>
+                            <p class="error-message" style="color: red">Введите ставку не меньше мин. ставки</p>
                             @enderror
+
                     </div>
                     <div class="history">
                         <h3>История ставок ({{ $lot->bets->count()  }})</h3>
                         <table class="history__list">
-                            @foreach($lot->bets as $bet)
+                            @foreach($lot->bets()->orderBy('created_at', 'desc')->get() as $bet)
                             <tr class="history__item">
                                 <td class="history__name">{{ $bet->user->name }}</td>
                                 <td class="history__price">{{ $bet->price_bet }}</td>

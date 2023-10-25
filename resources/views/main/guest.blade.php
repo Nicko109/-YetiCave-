@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.guest')
 @section('content')
     <main class="container">
         <section class="promo">
@@ -7,7 +7,7 @@
             <ul class="promo__list">
                 @foreach($categories as $category)
                     <li class="promo__item promo__item--{{$category->character_code}}">
-                        <a class="promo__link" href="all-lots.html">{{$category->title}}</a>
+                        <a class="promo__link" href="{{ route('guest', ['category' => $category->id]) }}">{{$category->title}}</a>
                     </li>
                 @endforeach
             </ul>

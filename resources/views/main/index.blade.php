@@ -30,7 +30,6 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost">{{$lot->start_price}}<b class="rub">р</b></span>
                         </div>
-
                             @php
                                 $now = \Carbon\Carbon::now();
                                 $endTime = \Carbon\Carbon::parse($lot->date_finish);

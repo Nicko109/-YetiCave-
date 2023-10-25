@@ -19,7 +19,7 @@
             <a class="main-header__logo" href="/">
                 <img src="{{asset('assets/img/logo.svg')}}" width="160" height="39" alt="Логотип компании YetiCave">
             </a>
-            <form class="main-header__search" method="get"  action="{{ route('main.index') }}"  autocomplete="off">
+            <form class="main-header__search" method="get"  action="{{ route('guest') }}"  autocomplete="off">
                 <input type="search" name="title" placeholder="Поиск лота"  value="{{ request()->get('title') }}">
                 <input class="main-header__search-btn" type="submit" value="Найти">
             </form>
@@ -28,12 +28,10 @@
                 <nav class="user-menu">
                     <div class="user-menu__logged">
                         <p>{{$user->name}}</p>
-                        <a class="user-menu__bets user-menu" href="{{ route('main.bet.index') }}">Мои ставки</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
                             <button type="submit" class="logout-button">Выйти</button>
                         </form>
-
                     </div>
                 </nav>
             @endauth

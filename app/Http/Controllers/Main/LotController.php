@@ -22,8 +22,11 @@ class LotController extends Controller
         $categories = Category::all();
         $user = Auth::user();
         $lot = Lot::find($lotId);
+        $lastBet = $lot->bets->sortByDesc('created_at')->first();
         $bets = Bet::all();
-        return view('main.lot.view', compact('lot', 'user', 'categories', 'bets'));
+
+        $isOwner = $user && $lot->user_id == $user->id;
+        return view('main.lot.view', compact('lot', 'user', 'categories', 'bets', 'lastBet', 'isOwner'));
     }
 
     public function form($lotId = '')
@@ -71,5 +74,6 @@ class LotController extends Controller
 
         return $rules;
     }
+
 
 }

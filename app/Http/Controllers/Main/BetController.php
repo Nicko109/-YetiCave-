@@ -16,45 +16,25 @@ use Illuminate\Support\Facades\Storage;
 class BetController extends Controller
 {
 
-//    public function index()
-//    {
-//        $lots = Lot::all();
-//
-//        $betQuery = Bet::query();
-//
-//        $bets = $betQuery->paginate(8);
-//
-//        return view('admin.bet.index', compact('bets', 'lots'));
-//    }
+    public function index()
+    {
+        $user = Auth::user();
+        $categories = Category::all();
+        $betQuery = Bet::query()->where('user_id', $user->id);
+        $lots = Lot::all();
 
+        $bets = $betQuery->orderBy('created_at', 'desc')->paginate(6);
 
+        return view('main.bet.index', compact('user', 'categories', 'bets', 'lots'));
+    }
 
-//    public function view($betId)
-//    {
-//        $bet = Bet::find($betId);
-//
-//        return view('admin.bet.view', compact('bet'));
-//    }
-
-
-//    public function form($betId = '')
-//    {
-//        $lots = Lot::all();
-//        $bet = null;
-//        if (!empty($betId)) {
-//            $bet = Bet::query()->where('id', $betId)->first();
-//        }
-//
-//        return view('admin.bet.form', compact('lots','bet' ));
-//
-//    }
 
     public function actions(Lot $lot, Request $request)
     {
         $bet = $request['id'] ? Bet::query()->findOrFail($request['id']) : new Bet();
 
         if ($request['action'] == 'create' || $request['action'] == 'update') {
-            $data =$request->validate($this->rules());
+            $data =$request->validate($this->rules($lot));
             $data['user_id'] = auth()->user()->id;
             $data['lot_id'] = $lot->id;
             $bet->fill($data);
@@ -66,12 +46,20 @@ class BetController extends Controller
         return redirect()->route('main.lot.view', $lot->id);
     }
 
-    private function rules()
+    private function rules(Lot $lot)
     {
-        $rules = [
-            'price_bet' => 'required|integer|min:1',
+        // Получите минимальную ставку на основе последней ставки и шага лота
+        $minBet = $this->getMinBet($lot);
+
+        return [
+            'price_bet' => 'required|integer|min:' . $minBet,
         ];
-        return $rules;
+    }
+
+    private function getMinBet(Lot $lot)
+    {
+        $lastBet = $lot->bets->sortByDesc('created_at')->first();
+        return $lastBet ? $lastBet->price_bet + $lot->step : $lot->start_price + $lot->step;
     }
 
 }
