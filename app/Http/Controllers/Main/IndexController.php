@@ -27,9 +27,11 @@ class IndexController extends Controller
             $lotQuery->where('category_id', $categoryId);
         }
 
+        $now = \Carbon\Carbon::now();
+
         $lots = $lotQuery->orderBy('created_at', 'desc')->paginate(6);
 
-        return view('main.index', compact('categories', 'user', 'lots'));
+        return view('main.index', compact('categories', 'user', 'lots', 'now'));
     }
 
     private function rules()
@@ -41,4 +43,6 @@ class IndexController extends Controller
 
         return $rules;
     }
+
+
 }

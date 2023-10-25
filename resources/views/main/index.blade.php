@@ -18,6 +18,14 @@
         </div>
         <ul class="lots__list">
             @foreach($lots as $lot)
+                @php
+                    $endTime = \Carbon\Carbon::parse($lot->date_finish);
+                    $diff = $endTime->diff($now);
+                @endphp
+
+                @if($diff->invert === 0)  {{-- Дата окончания прошла --}}
+                @continue
+                @endif
             <li class="lots__item lot">
                 <div class="lot__image">
                     <img src="{{ asset('storage/' . $lot->image ) }}" width="350" height="260" alt="Сноуборд">
@@ -30,11 +38,6 @@
                             <span class="lot__amount">Стартовая цена</span>
                             <span class="lot__cost">{{$lot->start_price}}<b class="rub">р</b></span>
                         </div>
-                            @php
-                                $now = \Carbon\Carbon::now();
-                                $endTime = \Carbon\Carbon::parse($lot->date_finish);
-                                $diff = $endTime->diff($now);
-                            @endphp
                         <div class="lot__timer timer @if ($diff->d < 1) lot__timer timer timer--finishing @endif">
                             @if ($diff->d > 0)
                                 {{ $diff->d }} д {{ $diff->h }} ч {{ $diff->i }} мин
