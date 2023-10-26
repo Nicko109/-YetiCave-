@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Storage;
 class BetController extends Controller
 {
 
-    public function index()
+    public function index(Lot $lot)
     {
         $user = Auth::user();
         $categories = Category::all();
         $betQuery = Bet::query()->where('user_id', $user->id);
         $lots = Lot::all();
+        $now = \Carbon\Carbon::now();
+
 
         $bets = $betQuery->orderBy('created_at', 'desc')->paginate(6);
 
-        return view('main.bet.index', compact('user', 'categories', 'bets', 'lots'));
+
+        return view('main.bet.index', compact('user', 'categories', 'bets', 'lots', 'now'));
     }
 
 
@@ -55,7 +58,6 @@ class BetController extends Controller
             'price_bet' => 'required|integer|min:' . $minBet,
         ];
     }
-
     private function getMinBet(Lot $lot)
     {
         $lastBet = $lot->bets->sortByDesc('created_at')->first();

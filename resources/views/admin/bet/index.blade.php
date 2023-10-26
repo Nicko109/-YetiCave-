@@ -25,10 +25,11 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
 
-    {{--                <form class="search-form" action="{{ route('admin.bet.index') }}" autocomplete="off" method="GET">--}}
-    {{--                    <input class="search-form__input" type="text" name="title" placeholder="Название проекта" value="{{ request()->get('title') }}">--}}
-    {{--                    <input class="btn-primary mb-4" type="submit" value="Поиск">--}}
-    {{--                </form>--}}
+                    <form class="search-form" action="{{ route('admin.bet.index') }}" autocomplete="off" method="GET">
+                        <input class="search-form__input" type="text" name="price_bet" placeholder="Сумма ставки" value="{{ request()->get('price_bet') }}">
+                        <input class="search-form__input" type="text" name="lot_title" placeholder="Наименование лота" value="{{ request()->get('lot_title') }}">
+                        <input class="btn-primary mb-4" type="submit" value="Поиск">
+                    </form>
                     <div class="row">
                         <div class="col-10">
                             <div class="card">
@@ -44,7 +45,11 @@
                                                 <a href="{{ route('admin.bet.index', ['sort' => 'asc'])}}">↑</a>
                                                 <a href="{{ route('admin.bet.index', ['sort' => 'desc'])}}">↓</a>
                                             </th>
-                                            <th>Наименование лота</th>
+                                            <th>
+                                                Наименование лота
+                                                <a href="{{ route('admin.bet.index', ['sort' => 'asc'])}}">↑</a>
+                                                <a href="{{ route('admin.bet.index', ['sort' => 'desc'])}}">↓</a>
+                                            </th>
                                             <th colspan="3" class="text-center">Действие</th>
                                         </tr>
                                         </thead>

@@ -40,26 +40,51 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-10">
                         <div class="col-12">
                             <div class="card">
-
                                 <!-- /.card-header -->
                                 <div class="card-body table-responsive p-0">
                                     <table class="table table-hover text-nowrap">
+                                        <tbody>
                                         <thead>
                                         <tr>
-                                            <th>ID</th>
+                                            <th>Id</th>
                                             <th>Имя</th>
                                             <th>Email</th>
+                                            <th>Контакты</th>
+                                        </tr>
                                         <tr>
-                                        </thead>
-                                        <tbody>
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
+                                            <td>{{ $user->contacts }}</td>
+
+                                        </tr>
+                                        </thead>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table table-hover text-nowrap">
+                                        <tbody>
+                                        <thead>
+                                        <tr>
+                                            <th>Лоты</th>
+                                            <th>Категории</th>
+                                        </tr>
+                                        </thead>
+                                        @foreach($lots as $lot)
+                                            <tr>
+                                                <td>{{ $lot->title }}</td>
+                                                <td>{{ $lot->category->title }}</td>
+                                            </tr>
+                                            @endforeach
+                                            </tbody>
+                                    </table>
+                                    <div>
+                                        {{ $lots->withQueryString()->links() }}
+                                    </div>
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -67,7 +92,6 @@
                         </div>
                     </div>
                 </div>
-
 
                 <!-- /.row -->
             </div><!-- /.container-fluid -->

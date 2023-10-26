@@ -29,7 +29,7 @@ class IndexController extends Controller
 
         $now = \Carbon\Carbon::now();
 
-        $lots = $lotQuery->orderBy('created_at', 'desc')->paginate(6);
+        $lots = $lotQuery->orderBy('created_at', 'desc')->paginate(9);
 
         return view('main.index', compact('categories', 'user', 'lots', 'now'));
     }

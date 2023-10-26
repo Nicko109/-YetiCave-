@@ -23,6 +23,7 @@ class LotController extends Controller
         $user = Auth::user();
         $lot = Lot::find($lotId);
         $lastBet = $lot->bets->sortByDesc('created_at')->first();
+
         $bets = Bet::all();
 
         $isOwner = $user && $lot->user_id == $user->id;

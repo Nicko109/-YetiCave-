@@ -25,19 +25,10 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
 
-{{--                <form class="search-form" action="{{ route('admin.lot.index') }}" autocomplete="off" method="GET">--}}
-{{--                    <input class="search-form__input" type="text" name="name" placeholder="Имя" value="{{ request()->get('name') }}">--}}
-{{--                    <input class="search-form__input ml-3" type="text" name="email" placeholder="Email" value="{{ request()->get('email') }}">--}}
-
-{{--                    <select name="role" class="search-form__select">--}}
-{{--                        <option value="selected">Все роли</option>--}}
-{{--                        @foreach($roles as $key => $role)--}}
-{{--                            <option value="{{ $key }}" {{ (request('role') == $key) ? 'selected' : '' }}>{{ $role }}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-
-{{--                    <input class="btn-primary mb-4" type="submit" value="Поиск">--}}
-{{--                </form>--}}
+                <form class="search-form" action="{{ route('admin.lot.index') }}" autocomplete="off" method="GET">
+                    <input class="search-form__input" type="text" name="title" placeholder="Наименование лота" value="{{ request()->get('title') }}">
+                    <input class="btn-primary mb-4" type="submit" value="Поиск">
+                </form>
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
@@ -57,8 +48,16 @@
                                             <a href="{{ route('admin.lot.index', ['sort' => 'asc', 'column' => 'start_price']) }}">↑</a>
                                             <a href="{{ route('admin.lot.index', ['sort' => 'desc', 'column' => 'start_price']) }}">↓</a>
                                         </th>
-                                        <th>Шаг ставки</th>
-                                        <th>Дата завершения</th>
+                                        <th>
+                                            Шаг ставки
+                                            <a href="{{ route('admin.lot.index', ['sort' => 'asc', 'column' => 'step']) }}">↑</a>
+                                            <a href="{{ route('admin.lot.index', ['sort' => 'desc', 'column' => 'step']) }}">↓</a>
+                                        </th>
+                                        <th>
+                                            Дата завершения
+                                            <a href="{{ route('admin.lot.index', ['sort' => 'asc', 'column' => 'date_finish']) }}">↑</a>
+                                            <a href="{{ route('admin.lot.index', ['sort' => 'desc', 'column' => 'date_finish']) }}">↓</a>
+                                        </th>
                                         <th colspan="3" class="text-center">Действие</th>
                                     </tr>
                                     </thead>

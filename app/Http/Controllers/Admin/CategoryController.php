@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Category\StoreRequest;
+use App\Http\Requests\Admin\Category\FilterRequest;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,9 +13,27 @@ use Illuminate\Support\Facades\Storage;
 class CategoryController extends Controller
 {
 
-    public function index()
+    public function index(FilterRequest $request)
     {
+        $data = $request->validated();
+        $sort = $request->input('sort', 'asc');
+
         $categoryQuery = Category::query();
+
+
+        if (isset($data['title']) || isset($data['character_code'])) {
+            $categoryQuery->where(function ($query) use ($data) {
+                if (isset($data['title'])) {
+                    $query->orWhere('title', 'like', "%{$data['title']}%");
+                }
+                if (isset($data['character_code'])) {
+                    $query->orWhere('character_code', 'like', "%{$data['character_code']}%");
+                }
+            });
+        }
+
+        $categoryQuery->orderBy('title', $sort);
+
 
         $categories = $categoryQuery->paginate(6);
 

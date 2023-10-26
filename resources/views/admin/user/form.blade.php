@@ -75,19 +75,6 @@
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">Аватар</label>
-                            <div class="input-group">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input"
-                                           name="avatar" {{ is_null($user) ? '' : $user->avatar }}>
-                                    <label class="custom-file-label">Добавить</label>
-                                </div>
-                                <div class="input-group-append">
-                                    <span class="input-group-text">Загрузка</span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group w-25">
                             <label>Выберите роль</label>
                             <select name="role" class="form-control">

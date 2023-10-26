@@ -25,10 +25,11 @@
                 <div class="container-fluid">
                     <!-- Small boxes (Stat box) -->
 
-    {{--                <form class="search-form" action="{{ route('admin.category.index') }}" autocomplete="off" method="GET">--}}
-    {{--                    <input class="search-form__input" type="text" name="title" placeholder="Название проекта" value="{{ request()->get('title') }}">--}}
-    {{--                    <input class="btn-primary mb-4" type="submit" value="Поиск">--}}
-    {{--                </form>--}}
+                    <form class="search-form" action="{{ route('admin.category.index') }}" autocomplete="off" method="GET">
+                        <input class="search-form__input" type="text" name="title" placeholder="Наименование категории" value="{{ request()->get('title') }}">
+                        <input class="search-form__input" type="text" name="character_code" placeholder="Наименование кода" value="{{ request()->get('character_code') }}">
+                        <input class="btn-primary mb-4" type="submit" value="Поиск">
+                    </form>
                     <div class="row">
                         <div class="col-6">
                             <div class="card">
@@ -44,7 +45,11 @@
                                                 <a href="{{ route('admin.category.index', ['sort' => 'asc'])}}">↑</a>
                                                 <a href="{{ route('admin.category.index', ['sort' => 'desc'])}}">↓</a>
                                             </th>
-                                            <th>Символьный код</th>
+                                            <th>
+                                                Символьный код
+                                                <a href="{{ route('admin.category.index', ['sort' => 'asc'])}}">↑</a>
+                                                <a href="{{ route('admin.category.index', ['sort' => 'desc'])}}">↓</a>
+                                            </th>
                                             <th colspan="3" class="text-center">Действие</th>
                                         </tr>
                                         </thead>

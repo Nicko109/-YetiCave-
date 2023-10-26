@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Category\StoreRequest;
+use App\Http\Requests\Admin\Category\FilterRequest;
 use App\Models\Bet;
 use App\Models\Category;
 use App\Models\Lot;
@@ -15,15 +15,31 @@ use Illuminate\Support\Facades\Storage;
 class BetController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $lots = Lot::all();
+        $data = $request->all();
+
+        $sort = $request->input('sort', 'asc');
+        $priceSortLink = route('admin.bet.index', ['sort' => $sort === 'asc' ? 'desc' : 'asc']); // Добавьте ссылку для сортировки по цене
 
         $betQuery = Bet::query();
 
+        if (isset($data['price_bet'])) {
+            $betQuery->where('price_bet', '=', $data['price_bet']);
+        }
+
+        if (isset($data['lot_title'])) {
+            $betQuery->whereHas('lot', function ($query) use ($data) {
+                $query->where('title', 'like', '%' . $data['lot_title'] . '%');
+            });
+        }
+
+
+        $betQuery->orderBy('price_bet', $sort);
+
         $bets = $betQuery->paginate(8);
 
-        return view('admin.bet.index', compact('bets', 'lots'));
+        return view('admin.bet.index', compact('bets', 'priceSortLink', 'data'));
     }
 
 

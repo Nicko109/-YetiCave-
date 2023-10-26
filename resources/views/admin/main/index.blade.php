@@ -31,7 +31,7 @@
                                 <h3>{{ $data['usersCount'] }}</h3>
 
                                 <p>Пользователи</p>
-{{--                                <p>Создано: {{ $data['usersCreatedInPeriod'] }} пользователей</p>--}}
+                                <p>Создано: {{ $data['usersCreatedInPeriod'] }} пользователей</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users"></i>
@@ -46,7 +46,7 @@
                             <div class="inner">
                                 <h3>{{ $data['lotsCount'] }}</h3>
                                 <p>Лоты</p>
-{{--                                <p>Создано: {{ $data['tasksCreatedInPeriod'] }} задачи</p>--}}
+                                <p>Создано: {{ $data['lotsCreatedInPeriod'] }} лотов</p>
                             </div>
                             <div class="icon">
                                 <i class="far fa-clipboard"></i>
@@ -62,7 +62,7 @@
                                 <h3> {{ $data['categoriesCount'] }}</h3>
 
                                 <p>Категории</p>
-{{--                                <p>Создано: {{ $data['projectsCreatedInPeriod'] }} проектов</p>--}}
+                                <p>Создано: {{ $data['categoriesCreatedInPeriod'] }} категорий</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-th-list"></i>
@@ -78,6 +78,7 @@
                                 <h3>{{ $data['betsCount'] }}</h3>
 
                                 <p>Ставки</p>
+                                <p>Создано: {{ $data['betsCreatedInPeriod'] }} ставок</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-tags"></i>
@@ -94,11 +95,11 @@
                         <form action="#" method="GET" class="form-inline">
                             <div class="form-group mx-2">
                                 <label for="start_date">Начальная дата:</label>
-                                <input type="date" name="start_date" id="start_date" class="form-control" value="#">
+                                <input type="date" name="start_date" id="start_date" class="form-control" value="{{ old('start_date', $startDate) }}">
                             </div>
                             <div class="form-group mx-2">
                                 <label for="end_date">Конечная дата:</label>
-                                <input type="date" name="end_date" id="end_date" class="form-control" value="#">
+                                <input type="date" name="end_date" id="end_date" class="form-control" value="{{ old('end_date', $endDate) }}">
                             </div>
                             <button type="submit" class="btn btn-primary">Применить</button>
                         </form>

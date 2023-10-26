@@ -25,21 +25,21 @@
             <div class="container-fluid">
                 <!-- Small boxes (Stat box) -->
 
-{{--                <form class="search-form" action="{{ route('admin.user.index') }}" autocomplete="off" method="GET">--}}
-{{--                    <input class="search-form__input" type="text" name="name" placeholder="Имя" value="{{ request()->get('name') }}">--}}
-{{--                    <input class="search-form__input ml-3" type="text" name="email" placeholder="Email" value="{{ request()->get('email') }}">--}}
+                <form class="search-form" action="{{ route('admin.user.index') }}" autocomplete="off" method="GET">
+                    <input class="search-form__input" type="text" name="name" placeholder="Имя" value="{{ request()->get('name') }}">
+                    <input class="search-form__input ml-3" type="text" name="email" placeholder="Email" value="{{ request()->get('email') }}">
 
-{{--                    <select name="role" class="search-form__select">--}}
-{{--                        <option value="selected">Все роли</option>--}}
-{{--                        @foreach($roles as $key => $role)--}}
-{{--                            <option value="{{ $key }}" {{ (request('role') == $key) ? 'selected' : '' }}>{{ $role }}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
+                    <select name="role" class="search-form__select">
+                        <option value="selected">Все роли</option>
+                        @foreach($roles as $key => $role)
+                            <option value="{{ $key }}" {{ (request('role') == $key) ? 'selected' : '' }}>{{ $role }}</option>
+                        @endforeach
+                    </select>
 
-{{--                    <input class="btn-primary mb-4" type="submit" value="Поиск">--}}
-{{--                </form>--}}
+                    <input class="btn-primary mb-4" type="submit" value="Поиск">
+                </form>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-10">
                         <div class="card">
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
@@ -57,6 +57,7 @@
                                             <a href="{{ route('admin.user.index', ['sort' => 'asc', 'column' => 'email']) }}">↑</a>
                                             <a href="{{ route('admin.user.index', ['sort' => 'desc', 'column' => 'email']) }}">↓</a>
                                         </th>
+                                        <th>Контакты</th>
                                         <th colspan="3" class="text-center">Действие</th>
                                     </tr>
                                     </thead>
@@ -66,6 +67,7 @@
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
+                                            <td>{{ $user->contacts }}</td>
                                             <td class="text-center"> <a href="{{ route('admin.user.view', $user->id) }}"><i class="far fa-eye"></i></a></td>
                                             <td class="text-center"> <a href="{{ route('admin.user.form', $user->id) }}" class="text-success"><i class="fas fa-edit"></i></a></td>
                                             <td class="text-center">

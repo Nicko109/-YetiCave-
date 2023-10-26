@@ -1226,9 +1226,7 @@ input:invalid .form__error{
   min-width: 130px;
 }
 
-.rates__item--win {
-  background-color: #45abde;
-}
+
 
 .rates__item--win .rates__title a,
 .rates__item--win .rates__category,
@@ -1241,6 +1239,11 @@ input:invalid .form__error{
   opacity: 0.4;
 }
 
+
+.rates__item--win {
+  background-color: #45abde;
+  opacity: 1;
+}
 .logout-button {
     background: none; /* Убрать фон */
     border: none; /* Убрать границу */

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Lot\FilterRequest;
 use App\Http\Requests\Admin\User\StoreRequest;
 use App\Models\Category;
 use App\Models\Lot;
@@ -14,9 +15,17 @@ use Illuminate\Support\Facades\Storage;
 class LotController extends Controller
 {
 
-    public function index()
+    public function index(FilterRequest $request)
     {
+        $data = $request->validated();
+        $sort = $request->input('sort', 'asc');
         $lotsQuery = Lot::query();
+
+        if (isset($data['title'])) {
+            $lotsQuery->where('title', 'like', "%{$data['title']}%");
+        }
+
+        $lotsQuery->orderBy('title', $sort);
 
         $lots = $lotsQuery->paginate(4);
 
